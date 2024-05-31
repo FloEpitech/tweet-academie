@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+
+<html class="bg-gray-800">
+
+<head>
+    <title>User Profile</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="../scripts/controllers/ajax_user_profil.js"></script>
+    <script src="../scripts/controllers/ajax_search_bar.js"></script>
+</head>
+
+<header class="bg-gray-800">
+    <!-- Barre de recherche -->
+    <div class="flex justify-between items-center bg-gray-800 text-white p-4 mb-2">
+        <h1 class="text-2xl font-bold">Twitter</h1>
+        <a href="profil.html" class="text-white">Mon Profil</a>
+        <a href="tweet.html" id="bouton-tweet" class="bouton-profil text-blue-600">Tweet BG</a>
+        <a href="../back-end/logout.php" class="text-red-600"> Deconnexion</a>
+        <form id="searchForm" class="w-1/3">
+            <input type="text" id="searchbar" class="w-full p-2 rounded text-black" placeholder="Search"
+                autocomplete="off">
+            <!-- Cette div permet d'avoir un pré-visuel des résultats de la recherche -->
+            <div id="results" class="dropdown-menu"></div>
+        </form>
+    </div>
+</header>
+
+<body class="bg-gray-800 text-gray-900 py-8 px-4">
+    <!-- Afficher la bannière de profil -->
+    <div class="mb-4">
+        <label class="block text-sm font-medium text-white">Profile Banner:</label>
+        <img id="profile-banner" class="mt-1 w-full h-40 object-cover" src="" alt="Profile Banner" />
+    </div>
+    <!-- Afficher la photo de profil -->
+    <div class="mb-4">
+        <label class="block text-sm font-medium text-white">Profile Picture:</label>
+        <img id="profile-picture" class="mt-1 w-40 h-40 box-border border-4 border-black rounded-full" src=""
+            alt="Profile Picture" />
+    </div>
+
+    <h1 class="text-3xl font-bold mb-4 text-white">
+        Informations sur l'utilisateur :
+    </h1>
+
+    <div id="user-id" class="mb-2 text-white">User ID:</div>
+    <div id="user-firstname" class="mb-2 text-white">First Name:</div>
+    <div id="user-lastname" class="mb-2 text-white">Last Name:</div>
+    <div id="user-surname" class="mb-2 text-white">Surname:</div>
+    <div id="user-age" class="mb-2 text-white">Age:</div>
+    <div id="user-bio" class="mb-2 text-white">Bio:</div>
+    <div id="user-localisation" class="mb-2 text-white">Localisation:</div>
+    <div id="user-website" class="mb-2 text-white">Website:</div>
+
+    <a href="/view/modif_profil.html" id="bouton-modif-profil"
+        class="text-indigo-600 hover:text-indigo-700 transition duration-300 block mt-4 bouton-profil">Modifie ton
+        profil bg de la street, miam comment t'es BO twa
+    </a>
+</body>
+
+<div id="tweets" class="text-white">LES TWEETS SERONT AFFICHER ICI</div>
+
+</html>

@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en" class="overflow-x-hidden">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profil - Twitter</title>
+    <link rel="icon" type="image/png" href="../assets/folder_logo/logo_bleu.png" sizes="32x32">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="../scripts/controllers/ajax_search_bar.js"></script>
+    <script src="../scripts/controllers/ajax_follow.js"></script>
+    <script src="../scripts/controllers/ajax_tweet.js"></script>
+    <script src="../scripts/controllers/ajax_user_update_profil.js"></script>
+    <script src="../scripts//controllers/ajax_messagerie.js"></script>
+    <script src="../scripts/controllers/ajax_theme.js"></script>
+    <script src="../scripts/controllers/ajax_tendency_hashtag.js"></script>
+    <script src="../scripts/utils/profil.js"></script>
+    <script src="../scripts/utils/character_count.js"></script>
+    <script src="../scripts/utils/change_tabs.js"></script>
+    <script src="../scripts/utils/messagerie.js"></script>
+</head>
+
+<body class="bg-gray-100 bg-gray-100 dark:bg-stone-800">
+    <header class="border-b-2 border-slate-400 dark:border-stone-500">
+        <div class="flex h-14 w-screen place-content-center dark:bg-stone-800 justify-between">
+            <div class="flex mx-10   gap-6">
+                <div class="gap-2">
+                    <a href="accueil.html" type="button"
+                        class="text-blue-300 h-full  hover:bg-blue-300 hover:text-white focus:border-b-4 focus:border-blue-300 focus:outline-none focus:ring-blue-30 font-medium rounded-lg text-sm p-2.5 text-center inline-flex items-center me-2 ">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px"
+                            fill="currentColor">
+                            <path d="M0 0h24v24H0z" fill="none" />
+                            <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
+                        </svg>
+                        <span class="ml-2">Home</span>
+                    </a>
+                </div>
+                <div class="gap-2">
+                    <a href="profil.html" type="button"
+                        class="text-blue-300 h-full  hover:bg-blue-300 hover:text-white focus:border-b-4 focus:border-blue-300 focus:outline-none focus:ring-blue-30 font-medium rounded-lg text-sm p-2.5 text-center inline-flex items-center me-2 ">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px"
+                            fill="currentColor">
+                            <path
+                                d="M12 4a4 4 0 1 0 0 8 4 4 0 0 0 0-8Zm-2 9a4 4 0 0 0-4 4v1c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2v-1a4 4 0 0 0-4-4h-4Z">
+                        </svg>
+                        <span class="ml-2">Profil</span>
+                    </a>
+                </div>
+                <div class="gap-2">
+                    <a href="messagerie.html" type="button"
+                        class="text-blue-300 h-full  hover:bg-blue-300 hover:text-white focus:border-b-4 focus:border-blue-300 focus:outline-none focus:ring-blue-30 font-medium rounded-lg text-sm p-2.5 text-center inline-flex items-center me-2 ">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px"
+                            fill="currentColor">
+                            <path
+                                d="M4 3a1 1 0 0 0-1 1v8c0 .6.4 1 1 1h1v2a1 1 0 0 0 1.7.7L9.4 13H15c.6 0 1-.4 1-1V4c0-.6-.4-1-1-1H4Z" />
+                            <path
+                                d="M8 17.2h.1l2.1-2.2H15a3 3 0 0 0 3-3V8h2c.6 0 1 .4 1 1v8c0 .6-.4 1-1 1h-1v2a1 1 0 0 1-1.7.7L14.6 18H9a1 1 0 0 1-1-.8Z" />
+                        </svg>
+                        <span class="ml-2">Messages</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="flex">
+                <div>
+                    <img src="/assets/folder_logo/logo_bleu.png" class="w-14 h-14" alt="">
+                </div>
+            </div>
+
+            <div class="flex mx-10 gap-6 ">
+                <div
+                    class="flex items-center my-auto h-10 bg-white rounded-full border border-gray-200 dark:border-stone-500 dark:bg-zinc-700">
+                    <svg class="h-5 w-5 ml-3 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path
+                            d="m24 22.586-6.262-6.262a10.016 10.016 0 1 0-1.414 1.414L22.586 24ZM10 18a8 8 0 1 1 8-8 8.009 8.009 0 0 1-8 8Z"
+                            fill="#ababab">
+                    </svg>
+                    <form id="searchForm" class="relative">
+                        <input type="text" id="searchbar"
+                            class="bg-grey-lighter h-8 px-4 py-2 text-xs w-full rounded-full outline-none dark:bg-zinc-700 dark:text-white"
+                            placeholder="Search" autocomplete="off">
+                        <div id="results" class="dropdown-menu absolute left-0 mt-1 z-40"></div>
+                    </form>
+                </div>
+                <div class="my-auto">
+                    <a href="../back-end/logout.php"
+                        class="bg-red-300 hover:bg-red-500 mt-1.5 text-white font-bold py-2 px-4 rounded-full">
+                        Log out</a>
+                </div>
+
+                <div class=" flex justify-center h-12 w-12 mt-1 items-center dark:bg-stone-800">
+                    <button id="theme-toggle" class="h-12 w-12 rounded-lg p-2 hover:bg-gray-100 hover:bg-gray-700">
+                        <svg class="fill-black-700 block dark:hidden" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+                        </svg>
+                        <svg class="fill-yellow-500 hidden dark:block" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1
+                                1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1
+                                1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"
+                                fill-rule="evenodd" clip-rule="evenodd"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="w-full">
+            <div id="profile-banner" class="relative h-60 bg-cover bg-center z-30"
+                style="background-image: url('/assets/folder_logo/fond_forgot.png');">
+
+                <img id="profile-picture" src="/assets/folder_logo/02_MAILLOT_PRO_2023.jpg" alt="Profile Picture"
+                    class="absolute -bottom-16 left-40 w-36 h-36 rounded-full border-4 border-white dark:border-stone-800">
+            </div>
+
+            <div class=" w-full ">
+                <div
+                    class="border-b-2 border-t-2 border-slate-400 dark:border-stone-500 w-full bg-white h-auto mx-auto flex items-center justify-between dark:bg-stone-800">
+                    <div></div>
+
+                    <div class="flex gap-4">
+                        <button aria-current="page"
+                            class="px-4 border-b-4 border-blue-200 text-blue-400 hover:text-white hover:bg-blue-200 transition-all duration-200 flex flex-col">
+                            <span class="text-sm p-0">Tweets</span>
+                            <span id="tweet-count">500</span>
+                        </button>
+                        <button
+                            class="px-4 border-b-4 border-blue-200 text-blue-400 hover:text-white hover:bg-blue-200 transition-all duration-200 flex flex-col">
+                            <span class="text-sm">Followers</span>
+                            <a href="#"
+                                class="text-sky-400 hover:text-sky-700 transition duration-300 block bouton-profil">
+                                <span id="followers-count">0</span>
+                            </a>
+                        </button>
+                        <button
+                            class="px-4 border-b-4 border-blue-200 text-blue-400 hover:text-white hover:bg-blue-200 transition-all duration-200 flex flex-col">
+                            <span class="text-sm">Followings</span>
+                            <a href="#"
+                                class="text-sky-400 hover:text-sky-700 transition duration-300 block bouton-profil">
+                                <span id="followings-count">0</span>
+                            </a>
+                        </button>
+                    </div>
+                    <div>
+                        <div id="bouton-modif-profil" class="inline-block cursor-pointer mr-2">
+                            <svg class="w-6 h-6 stroke-gray-400 hover:stroke-gray-800 transition-transform duration-300 transform hover:scale-90"
+                                aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M21 13v-2a1 1 0 0 0-1-1h-.8l-.7-1.7.6-.5a1 1 0 0 0 0-1.5L17.7 5a1 1 0 0 0-1.5 0l-.5.6-1.7-.7V4a1 1 0 0 0-1-1h-2a1 1 0 0 0-1 1v.8l-1.7.7-.5-.6a1 1 0 0 0-1.5 0L5 6.3a1 1 0 0 0 0 1.5l.6.5-.7 1.7H4a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h.8l.7 1.7-.6.5a1 1 0 0 0 0 1.5L6.3 19a1 1 0 0 0 1.5 0l.5-.6 1.7.7v.8a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1v-.8l1.7-.7.5.6a1 1 0 0 0 1.5 0l1.4-1.4a1 1 0 0 0 0-1.5l-.6-.5.7-1.7h.8a1 1 0 0 0 1-1Z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" />
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="fixed inset-0 bg-black bg-opacity-50 hidden z-50" id="overlay">
+                        <div class="flex justify-center items-center h-full">
+                            <div class="bg-white p-5 rounded-lg w-2/6 dark:bg-zinc-700">
+                                <div class="w-full text-center mb-8">
+                                    <span
+                                        class=" font-medium mx-auto text-2xl font-semibold text-blue-600/100 dark:text-blue-500/100">Edit
+                                        your profile</span>
+                                </div>
+
+                                <form class="" id="myForm">
+                                    <div class="w-full mb-20">
+                                        <div id="profile_banner_preview" class="relative h-40 bg-cover bg-center"
+                                            style="background-image: url('/assets/folder_logo/fond_forgot.png');">
+                                            <input type="file" id="hidden_profile_banner_input" class="hidden"">
+                                            <button type=" button" id="profile_banner_input"
+                                                style="margin-left: 45%; margin-top: 10%;"
+                                                class="absolute  rounded-full bg-black bg-opacity-50 p-2 uppercase leading-normal text-white shadow-lg transition duration-150 ease-in-out hover:bg-gray-400 hover:shadow-lg dark:hover:shadow-black/50 focus:outline-none focus:ring-0 active:bg-black active:scale-90 motion-reduce:transition-none">
+                                            <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                                fill="none" viewBox="0 0 20 18">
+                                                <path fill="currentColor"
+                                                    d="M13 5.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0ZM7.565 7.423 4.5 14h11.518l-2.516-3.71L11 13 7.565 7.423Z" />
+                                                <path stroke="currentColor" stroke-linecap="round"
+                                                    stroke-linejoin="round" stroke-width="2"
+                                                    d="M18 1H2a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1Z" />
+                                                <path stroke="currentColor" stroke-linecap="round"
+                                                    stroke-linejoin="round" stroke-width="2"
+                                                    d="M13 5.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0ZM7.565 7.423 4.5 14h11.518l-2.516-3.71L11 13 7.565 7.423Z" />
+                                            </svg>
+                                            </button>
+
+                                            <div
+                                                class="relative flex justify-center items-center w-40 -bottom-20 left-5 ">
+                                                <img id="profile_picture_preview"
+                                                    src="/assets/folder_logo/02_MAILLOT_PRO_2023.jpg"
+                                                    alt="Profile Picture"
+                                                    class="w-36 h-36 relative rounded-full border-4 border-white">
+                                                <input type="file" id="hidden_profile_picture_input" class="hidden">
+                                                <button type="button" id="profile_picture_button"
+                                                    class="absolute inline-block rounded-full bg-black bg-opacity-50 p-2 uppercase leading-normal text-white shadow-lg transition duration-150 ease-in-out hover:bg-gray-400 hover:shadow-lg dark:hover:shadow-black/50 focus:outline-none focus:ring-0 active:bg-black active:scale-90 motion-reduce:transition-none">
+                                                    <svg class="w-5 h-5" aria-hidden="true"
+                                                        xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                        viewBox="0 0 20 18">
+                                                        <path fill="currentColor"
+                                                            d="M13 5.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0ZM7.565 7.423 4.5 14h11.518l-2.516-3.71L11 13 7.565 7.423Z" />
+                                                        <path stroke="currentColor" stroke-linecap="round"
+                                                            stroke-linejoin="round" stroke-width="2"
+                                                            d="M18 1H2a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1Z" />
+                                                        <path stroke="currentColor" stroke-linecap="round"
+                                                            stroke-linejoin="round" stroke-width="2"
+                                                            d="M13 5.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0ZM7.565 7.423 4.5 14h11.518l-2.516-3.71L11 13 7.565 7.423Z" />
+                                                    </svg>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="max-w-md mx-auto mb-12 ">
+                                        <div class="relative z-0 w-full mb-5 group">
+                                            <input type="text" name="username" id="username"
+                                                class="block py-2.5 px-0 w-full text-sm text-black bg-transparent border-0 border-b-2 border-gray-300 appearance-none  dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                                placeholder=" " required />
+                                            <label for="username"
+                                                class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Change
+                                                username
+                                            </label>
+                                        </div>
+                                        <div class="relative z-0 w-full mb-5 group">
+                                            <input type="text" name="bio" id="bio"
+                                                class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                                placeholder=" "  />
+                                            <label for="bio"
+                                                class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Change
+                                                bio</label>
+                                        </div>
+                                        <div class="relative z-0 w-full mb-5 group">
+                                            <input type="text" name="localisation" id="localisation"
+                                                class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none  dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                                placeholder=" " />
+                                            <label for="localisation"
+                                                class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                                                Change location</label>
+                                        </div>
+                                        <div class="relative z-0 w-full mb-5 group">
+                                            <input type="text" name="website" id="website"
+                                                class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none  dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                                placeholder=" " >
+                                            <label for="website"
+                                                class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                                                Change website</label>
+                                        </div>
+                                    </div>
+                                    <div id="message_area"></div>
+                                    <div class="gap-10 flex">
+                                        <button type="submit"
+                                            class="border-2 w-48 border-blue-600/100 mx-auto rounded-full font-medium text-white bg-blue-600/100 hover:bg-[#15202b] hover:text-blue-600/100 focus:outline-none focus:shadow-outline  h-10 transition duration-150 ease-in-out">Update</button>
+                                        <a href="profil.html"
+                                            class="flex justify-center items-center border-2 w-48 border-grey-700 mx-auto rounded-full font-medium hover:text-white hover:bg-blue-600/100 bg-[#15202b] text-blue-600/100 focus:outline-none focus:shadow-outline h-10 transition duration-150 ease-in-out">
+                                            Back
+                                        </a>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="w-full flex flex-nowrap">
+
+            <div class=" flex flex-col mt-4 w-1/4 pl-20">
+                <div class="w-5/6 p-4">
+                    <div class="flex ">
+                        <h3 id="user-username" class="font-bold text-lg dark:text-white flex">Dozo</h3>
+                        <button id="follow-button" type="button"
+                            class="ml-auto py-2 w- h-8 px-4 flex justify-center items-center bg-blue-300 hover:bg-blue-700 active:bg-blue-800 hover:scale-105 active:scale-95 transition ease-in duration-200 text-center text-base font-semibold shadow-md rounded-full text-white">
+                            <svg width="18" height="18" class="mr-1" viewBox="0 0 24 24" fill="currentColor"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path d="M4 12H20M12 4V20" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                            </svg>
+                            Follow
+                        </button>
+                    </div>
+                    <div class="flex mt-1">
+                        <p id="user-arrobase-username" class="text-gray-500">@Dozo</p>
+                        <button id="contact-button" type="button"
+                            class="ml-auto py-2 w- h-8 px-4 flex justify-center items-center bg-blue-300 hover:bg-blue-700 active:bg-blue-800 hover:scale-105 active:scale-95 transition ease-in duration-200 text-center text-base font-semibold shadow-md rounded-full text-white">
+                            <svg width="18" height="18" class="mr-1" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M9 11H15M12 8V14M21 20L17.6757 18.3378C17.4237 18.2118 17.2977 18.1488 17.1656 18.1044C17.0484 18.065 16.9277 18.0365 16.8052 18.0193C16.6672 18 16.5263 18 16.2446 18H6.2C5.07989 18 4.51984 18 4.09202 17.782C3.71569 17.5903 3.40973 17.2843 3.21799 16.908C3 16.4802 3 15.9201 3 14.8V7.2C3 6.07989 3 5.51984 3.21799 5.09202C3.40973 4.71569 3.71569 4.40973 4.09202 4.21799C4.51984 4 5.0799 4 6.2 4H17.8C18.9201 4 19.4802 4 19.908 4.21799C20.2843 4.40973 20.5903 4.71569 20.782 5.09202C21 5.51984 21 6.0799 21 7.2V20Z"
+                                    stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                            Messages
+                        </button>
+                    </div>
+
+                    <p id="user-bio" class="mt-2 mb-2 dark:text-white">
+                        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quisquam corporis enim laudantium
+                        laborum magnam sequi reiciendis, esse delectus totam dolore id cupiditate fugiat possimus
+                        sapiente laboriosam!
+                    </p>
+                    <div class="flex gap-2 dark:text-white">
+                        <svg fill="#808080" height="16px" width="16px" version="1.1" id="Layer_1"
+                            xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                            viewBox="0 0 511.985 511.985" xml:space="preserve" class="text-neutral-500">
+                            <g>
+                                <g>
+                                    <g>
+                                        <path
+                                            d="M222,3.277C153.477,16.59,99.111,72.751,87.702,141.764c-6.79,41.231,1.13,81.857,21.702,116.271
+                                    c2.35,3.928,4.199,7.011,8.39,14l0.967,1.613c41.753,69.614,59.977,101.895,79.073,142.806l38.825,83.218
+                                    c7.659,16.416,31.001,16.419,38.664,0.004l34.965-74.901c19.287-41.357,37.562-74.11,79.19-144.553l1.062-1.797
+                                    c6.181-10.459,9.139-15.472,12.673-21.482c15.271-25.943,23.445-55.54,23.445-86.29C426.659,63.541,329.368-17.545,222,3.277z
+                                    M366.44,235.307c-3.518,5.984-6.466,10.977-12.631,21.41l-1.062,1.797c-42.326,71.624-61.063,105.204-81.123,148.219
+                                    l-15.625,33.472l-19.5-41.795c-19.925-42.687-38.643-75.842-81.147-146.709l-0.967-1.613c-4.187-6.981-6.027-10.051-8.363-13.954
+                                    c-15.428-25.808-21.358-56.232-16.222-87.425c8.504-51.443,49.357-93.645,100.331-103.549
+                                    c80.922-15.693,153.862,45.096,153.862,125.49C383.993,193.74,377.88,215.872,366.44,235.307z" />
+                                        <path d="M255.993,106.652c-35.355,0-64,28.645-64,64s28.645,64,64,64s64-28.645,64-64S291.348,106.652,255.993,106.652z
+                                    M255.993,191.985c-11.791,0-21.333-9.542-21.333-21.333s9.542-21.333,21.333-21.333c11.791,0,21.333,9.542,21.333,21.333
+                                    S267.784,191.985,255.993,191.985z" />
+                                    </g>
+                                </g>
+                            </g>
+                        </svg>
+                        <span id="user-localisation" class="text-neutral-500 flex gap-1 mb-2">Localisation</span>
+                    </div>
+
+                    <div class="flex gap-2">
+                        <svg width="22px" height="22px" viewBox="0 0 24 24" fill="#808080"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                d="M9.83824 18.4467C10.0103 18.7692 10.1826 19.0598 10.3473 19.3173C8.59745 18.9238 7.07906 17.9187 6.02838 16.5383C6.72181 16.1478 7.60995 15.743 8.67766 15.4468C8.98112 16.637 9.40924 17.6423 9.83824 18.4467ZM11.1618 17.7408C10.7891 17.0421 10.4156 16.1695 10.1465 15.1356C10.7258 15.0496 11.3442 15 12.0001 15C12.6559 15 13.2743 15.0496 13.8535 15.1355C13.5844 16.1695 13.2109 17.0421 12.8382 17.7408C12.5394 18.3011 12.2417 18.7484 12 19.0757C11.7583 18.7484 11.4606 18.3011 11.1618 17.7408ZM9.75 12C9.75 12.5841 9.7893 13.1385 9.8586 13.6619C10.5269 13.5594 11.2414 13.5 12.0001 13.5C12.7587 13.5 13.4732 13.5593 14.1414 13.6619C14.2107 13.1384 14.25 12.5841 14.25 12C14.25 11.4159 14.2107 10.8616 14.1414 10.3381C13.4732 10.4406 12.7587 10.5 12.0001 10.5C11.2414 10.5 10.5269 10.4406 9.8586 10.3381C9.7893 10.8615 9.75 11.4159 9.75 12ZM8.38688 10.0288C8.29977 10.6478 8.25 11.3054 8.25 12C8.25 12.6946 8.29977 13.3522 8.38688 13.9712C7.11338 14.3131 6.05882 14.7952 5.24324 15.2591C4.76698 14.2736 4.5 13.168 4.5 12C4.5 10.832 4.76698 9.72644 5.24323 8.74088C6.05872 9.20472 7.1133 9.68686 8.38688 10.0288ZM10.1465 8.86445C10.7258 8.95042 11.3442 9 12.0001 9C12.6559 9 13.2743 8.95043 13.8535 8.86447C13.5844 7.83055 13.2109 6.95793 12.8382 6.2592C12.5394 5.69894 12.2417 5.25156 12 4.92432C11.7583 5.25156 11.4606 5.69894 11.1618 6.25918C10.7891 6.95791 10.4156 7.83053 10.1465 8.86445ZM15.6131 10.0289C15.7002 10.6479 15.75 11.3055 15.75 12C15.75 12.6946 15.7002 13.3521 15.6131 13.9711C16.8866 14.3131 17.9412 14.7952 18.7568 15.2591C19.233 14.2735 19.5 13.1679 19.5 12C19.5 10.8321 19.233 9.72647 18.7568 8.74093C17.9413 9.20477 16.8867 9.6869 15.6131 10.0289ZM17.9716 7.46178C17.2781 7.85231 16.39 8.25705 15.3224 8.55328C15.0189 7.36304 14.5908 6.35769 14.1618 5.55332C13.9897 5.23077 13.8174 4.94025 13.6527 4.6827C15.4026 5.07623 16.921 6.08136 17.9716 7.46178ZM8.67765 8.55325C7.61001 8.25701 6.7219 7.85227 6.02839 7.46173C7.07906 6.08134 8.59745 5.07623 10.3472 4.6827C10.1826 4.94025 10.0103 5.23076 9.83823 5.5533C9.40924 6.35767 8.98112 7.36301 8.67765 8.55325ZM15.3224 15.4467C15.0189 16.637 14.5908 17.6423 14.1618 18.4467C13.9897 18.7692 13.8174 19.0598 13.6527 19.3173C15.4026 18.9238 16.921 17.9186 17.9717 16.5382C17.2782 16.1477 16.3901 15.743 15.3224 15.4467ZM12 21C16.9706 21 21 16.9706 21 12C21 7.02944 16.9706 3 12 3C7.02944 3 3 7.02944 3 12C3 16.9706 7.02944 21 12 21Z"
+                                fill="#808080" />
+                        </svg>
+                        <span id="user-website""
+                            class=" cursor-pointer text-blue-600 hover:text-blue-800">www.twitter.com</span>
+                    </div>
+                </div>
+                <div
+                    class="rounded-lg w-5/6 border-slate-400 dark:border-stone-500 shadow-lg bg-white dark:bg-stone-800 overflow-hidden mt-10 mx-auto shadow-lg border mb-10">
+                    <div class="flex">
+                        <div class="flex-1 m-2">
+                            <h2 class="px-4 py-2 text-xl w-48 font-semibold text-black dark:text-white">Who to follow
+                            </h2>
+                        </div>
+                    </div>
+                    <hr class="border-slate-400 dark:border-stone-500">
+                    <div id="suggestions"></div>
+                    <div class="flex">
+                        <div class="flex-1 p-4">
+                            <span id="showMoreButtonSuggest"
+                                class="px-4 ml-2 w-48 font-bold text-blue-400 cursor-pointer">Show more</>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class=" w-2/4 h-screen pt-5">
+                <form id="postContent">
+                    <div class="flex items-center px-3 py-2 rounded-sm bg-sky-200 dark:bg-zinc-700">
+                        <button type="button"
+                            class="inline-flex justify-center p-2 text-gray-500 rounded-lg cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400  dark:hover:text-white dark:hover:bg-gray-600"
+                            onclick="document.getElementById('imageFile').click()">
+                            <input type="file" id="imageFile" name="imageFile" accept="image/*" style="display: none;">
+                            <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                viewBox="0 0 20 18">
+                                <path fill="currentColor"
+                                    d="M13 5.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0ZM7.565 7.423 4.5 14h11.518l-2.516-3.71L11 13 7.565 7.423Z" />
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M18 1H2a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1Z" />
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M13 5.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0ZM7.565 7.423 4.5 14h11.518l-2.516-3.71L11 13 7.565 7.423Z" />
+                            </svg>
+                        </button>
+                        <div id="userDropdown"></div>
+
+                        <textarea id="tweetText" rows="1"
+                            class="block mx-4 p-2.5 w-full text-sm text-black bg-white rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-stone-800 dark:text-white"
+                            name="postContent" placeholder="What's new ?"></textarea>
+                        <svg id="progressCircle" width="30" height="30" viewBox="0 0 100 100" class="block mx-auto"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="50" cy="50" r="45" stroke="#d6d6d6" stroke-width="7" fill="transparent" />
+                            <circle id="progress" cx="50" cy="50" r="45" stroke="#4caf50" stroke-width="7"
+                                fill="transparent" stroke-dasharray="283" stroke-dashoffset="283"
+                                transform="rotate(-90 50 50)" />
+                        </svg>
+
+                        <button type="submit"
+                            class="inline-flex justify-center p-2 text-blue-600 rounded-full cursor-pointer hover:bg-blue-100 dark:text-blue-500 dark:hover:bg-gray-600">
+                            <svg class="w-5 h-5 rotate-90 rtl:-rotate-90" aria-hidden="true"
+                                xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 20">
+                                <path
+                                    d="m17.914 18.594-8-18a1 1 0 0 0-1.828 0l-8 18a1 1 0 0 0 1.157 1.376L8 18.281V9a1 1 0 0 1 2 0v9.281l6.758 1.689a1 1 0 0 0 1.156-1.376Z">
+                            </svg>
+                        </button>
+                    </div>
+                    <div id="imagePreview"></div>
+                </form>
+
+                <div id="content-central">
+                    <div id="postDisplay">
+                        <div id="tweetContainer"></div>
+                    </div>
+                    <ul class="responses"></ul>
+                    <div id="tweets"></div>
+                </div>
+
+                <div id="deleteModal" class="fixed z-10 inset-0 overflow-y-auto hidden" aria-labelledby="modal-title"
+                    role="dialog" aria-modal="true">
+                    <div class="flex items-center justify-center min-h-screen">
+                        <div
+                            class="bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                            <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                                <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">
+                                    Delete tweet
+                                </h3>
+                                <div class="mt-2">
+                                    <p class="text-sm text-gray-500">
+                                        Are you sure you want to delete this tweet ?
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                                <button type="button" id="confirmDelete"
+                                    class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm">
+                                    Delete
+                                </button>
+                                <button type="button" id="cancelDelete"
+                                    class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:w-auto sm:text-sm">
+                                    Cancel
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="followers" class="hidden"></div>
+                <div id="followings" class="hidden"></div>
+            </div>
+
+            <div
+                class="w-1/5 h-min rounded-lg  h-auto border-slate-400 dark:border-stone-500 shadow-lg bg-white dark:bg-stone-800 overflow-hidden mt-5 mx-auto shadow-lg border mb-10">
+
+                <div class="flex">
+                    <div class="flex-1 m-2">
+                        <h2 class="px-4 py-2 text-xl w-48 font-semibold dark:text-white text-gray-900">Trends</h2>
+                    </div>
+                </div>
+                <hr class="border-slate-400 dark:border-stone-500">
+                <div id="trendsDiv"></div>
+                <hr class="border-slate-400 dark:border-stone-500">
+
+                <div class="flex">
+                    <div class="flex-1 p-4">
+                        <span id="showMoreButton" class="px-4 ml-2 w-48 font-bold text-blue-400 hover:text-blue-300
+                            cursor-pointer">Show more</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="fixed z-10 inset-0 overflow-y-auto flex items-center justify-center" id="unfollowModal"
+            style="display: none;">
+            <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+                <div class="fixed inset-0 transition-opacity">
+                    <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+                </div>
+                <span class="hidden sm:inline-block sm:align-middle sm:h-screen"></span>​
+                <div
+                    class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                    <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                        <div class="sm:flex sm:items-start">
+                            <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                                <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">
+                                    Unfollow User
+                                </h3>
+                                <div class="mt-2">
+                                    <p class="text-sm leading-5 text-gray-500">
+                                        Are you sure you want unfollow <span id="unfollowUsername"></span> ?
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                        <span class="flex w-full rounded-md shadow-sm sm:ml-3 sm:w-auto">
+                            <button type="button" class="inline-flex justify-center w-full rounded-md border
+                                border-transparent px-4 py-2 bg-red-600 text-base leading-6 font-medium text-white
+                                shadow-sm hover:bg-red-500 focus:outline-none focus:border-red-700 focus:shadow-outline-red
+                                transition ease-in-out duration-150 sm:text-sm sm:leading-5" id="confirmUnfollow">
+                                Unfollow
+                            </button>
+                        </span>
+                        <span class="mt-3 flex w-full rounded-md shadow-sm sm:mt-0 sm:w-auto">
+                            <button type="button" id="cancelUnfollow" class="inline-flex justify-center w-full rounded-md border border-gray-300
+                                px-4 py-2 bg-white text-base leading-6 font-medium text-gray-700 shadow-sm
+                                hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue
+                                transition ease-in-out duration-150 sm:text-sm sm:leading-5 cancel-button">
+                                Cancel
+                            </button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="editTweetModal" class="fixed z-10 inset-0 overflow-y-auto hidden" aria-labelledby="modal-title"
+            role="dialog" aria-modal="true">
+            <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+                <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
+                <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+                <div
+                    class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                    <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                        <div class="sm:flex sm:items-start">
+                            <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                                <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">
+                                    Edit Tweet
+                                </h3>
+                                <div class="mt-2">
+                                    <textarea id="newMessage"
+                                        class="w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none"
+                                        rows="4" placeholder="Enter new message"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                        <button id="confirmEdit" type="button"
+                            class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none sm:ml-3 sm:w-auto sm:text-sm">
+                            Confirm
+                        </button>
+                        <button id="cancelEdit" type="button"
+                            class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
+                            Cancel
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+    <header>
+        <div class="fixed bottom-0 inset-x-0 h-8 w-full bg-[#15202b] flex justify-center gap-5">
+            <span class="text-white text-xs my-auto">Made by Sofiane Bessaha, Maxime Caron, Florian Desitter</span>
+            <span class="text-white text-xs my-auto">©2024 My_twitter</span>
+        </div>
+    </header>
+    <script src="../scripts/controllers/ajax_user_profil.js"></script>
+</body>
+
+</html>

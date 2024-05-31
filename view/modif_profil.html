@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Modifier le profil</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="../scripts/controllers/ajax_user_update_profil.js"></script>
+</head>
+
+<body class="bg-gray-100">
+    <div class="container mx-auto px-4 py-8">
+        <h1 class="text-2xl font-bold mb-4">Modifier le profil</h1>
+        <form id="updateProfilform" action="../back-end/controllers/user_controller.php" method="POST">
+            <!-- Champ pour la bannière de profil -->
+            <div class="mb-4">
+                <label for="profile_banner_preview" class="block text-sm font-medium text-gray-700">Bannière de profil
+                    actuelle</label>
+                <img id="profile_banner_preview" src="" alt="Bannière de profil actuelle"
+                    class="mt-1 w-full h-40 object-cover" />
+                <input type="file" id="profile_banner_input" name="profile_banner" style="display: none" />
+            </div>
+            <!-- Champ pour la photo de profil -->
+            <div class="mb-4">
+                <label for="profile_picture_preview" class="block text-sm font-medium text-gray-700">Photo de profil
+                    actuelle</label>
+                <img id="profile_picture_preview" src="" alt="Photo de profil actuelle"
+                    class="mt-1 w-40 h-40 box-border border-4 border-black rounded-full">
+                <input type="file" id="profile_picture_input" name="profile_picture" style="display: none">
+            </div>
+            <div class="mb-4">
+                <label for="username" class="block text-sm font-medium text-gray-700">Username</label>
+                <input type="text" id="username" name="username"
+                    class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
+            </div>
+            <div class="mb-4">
+                <label for="bio" class="block text-sm font-medium text-gray-700">Bio</label>
+                <textarea id="bio" name="bio" rows="3"
+                    class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"></textarea>
+            </div>
+            <div class="mb-4">
+                <label for="localisation" class="block text-sm font-medium text-gray-700">Localisation</label>
+                <input type="text" id="localisation" name="localisation"
+                    class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
+            </div>
+            <div class="mb-4">
+                <label for="website" class="block text-sm font-medium text-gray-700">Site Web</label>
+                <input type="text" id="website" name="website"
+                    class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
+            </div>
+            <div id="message_area"></div>
+            <div class="mt-4">
+                <button type="submit"
+                    class="inline-flex items-center px-4 py-2 bg-indigo-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-indigo-700 active:bg-indigo-700 focus:outline-none focus:border-indigo-700 focus:ring focus:ring-indigo-200 disabled:opacity-25 transition">
+                    Enregistrer
+                </button>
+            </div>
+        </form>
+    </div>
+</body>
+
+</html>
